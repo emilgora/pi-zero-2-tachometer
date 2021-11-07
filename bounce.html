@@ -1,0 +1,129 @@
+<div class="marquee">
+    <svg width="153px" height="69px"><g>
+            <path class="logo" d="M15.73,33.09l1.05-6.95c0.29-1.93,1.93-3.34,3.88-3.34h10.62h0.75v-0.75v-3.18v-0.75h-0.75H19.14
+                c-5.67,0-10.43,4.06-11.32,9.66L2.84,59.23L2.7,60.09h0.88H11h0.64l0.1-0.64l3.17-20.93h6.16h0.75v-0.75v-3.94v-0.75h-0.75H15.73z
+                "/>
+            <path class="logo" d="M37.25,33.54l0.69-3.43c0.36-1.78,1.94-3.07,3.77-3.07h8.89h0.75V26.3v-2.88v-0.75H50.6H35.07
+                c-3.26,0-6.04,2.32-6.61,5.52l-3.03,16.96c-0.26,1.44,0.13,2.9,1.06,4.01c0.94,1.13,2.33,1.77,3.82,1.77H45.6h0.75v-0.75v-2.92
+                V46.5H45.6h-8.1c-0.74,0-1.41-0.31-1.86-0.85c-0.43-0.53-0.59-1.19-0.45-1.87l0.69-3.43l0.33-1.65h9.45h0.75v-0.75v-3.65v-0.75
+                h-0.75H37.25z"/>
+            <path class="logo" d="M66.88,34.05c-4.57-1.27-5.95-3.58-5.71-5.32c0.13-0.96,0.79-1.69,1.53-1.69l8.96,0h0.75V26.3v-2.88v-0.75h-0.75h-13.2
+                c-4.01,0-6.33,3.11-6.86,6.2c-0.56,3.31,0.75,7.32,4.96,8.79c4.12,1.45,5.59,4.52,5.21,6.76c-0.22,1.3-1.02,2.08-2.13,2.09H49.31
+                h-0.75v0.75v2.92v0.75h0.75h15.65c4.3,0,7.08-3.92,7.61-7.8C73.01,39.79,71.8,35.41,66.88,34.05z"/>
+            <polygon class="logo" points="96.8,27.05 96.8,26.3 96.8,23.42 96.8,22.67 96.05,22.67 73.7,22.67 72.95,22.67 72.95,23.42 72.95,26.3 
+                72.95,27.05 73.7,27.05 80.41,27.05 76.17,50.04 76,50.93 76.9,50.93 84.29,50.93 84.92,50.93 85.03,50.3 89.07,27.05 
+                96.05,27.05 		"/>
+            <polygon class="logo" points="98.77,22.67 98.17,22.67 98.04,23.26 92.33,50.02 92.14,50.93 93.06,50.93 102.23,50.93 102.83,50.93 
+                102.96,50.33 108.67,23.57 108.86,22.67 107.94,22.67 		"/>
+            <ellipse class="logo" transform="matrix(0.3827 -0.9239 0.9239 0.3827 49.755 106.5119)" cx="104.58" cy="16.02" rx="4.98" ry="4.98"/>
+            <path class="logo" d="M147.66,50.03l-2.85-21.89c-0.02-0.21-0.66-5.39-4.54-6.29c-0.66-0.16-1.32-0.23-1.96-0.23c-3.91,0-5.79,2.91-5.86,3.03
+                l-10.66,18.36c-0.15,0.29-0.53,0.78-0.83,0.78c-0.4-0.05-0.44-0.76-0.45-0.77l-1.87-19.68l-0.06-0.68h-0.68h-7.82h-0.83l0.08,0.82
+                l1.87,19.58c0.13,3.15,1.87,9.29,7.51,9.64c0.15,0.01,0.3,0.01,0.45,0.01c5.3,0,8.22-5.85,8.34-6.1l0.89-1.56h9.33l0.68,5.21
+                l0.09,0.66l0.66,0l7.8-0.05l0.85-0.01L147.66,50.03z M131.02,39.94l4.72-9.06l1.18,9.06H131.02z"/>
+        </g></svg>
+    </div>
+
+<style>
+html,
+body {
+  background: #000;
+  color: #fff;
+  height: 100%;
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.marquee {
+  display: block;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+svg {
+  display: block;
+}
+.logo {
+  fill: #fff;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script>
+    (function ($, window, undefined) {
+	$.fn.marqueeify = function (options) {
+		var settings = $.extend({
+			horizontal: true,
+			vertical: true,
+			speed: 100, // In pixels per second
+			container: $(this).parent(),
+			bumpEdge: function () {}
+		}, options);
+		
+		return this.each(function () {
+			var containerWidth, containerHeight, elWidth, elHeight, move, getSizes,
+				$el = $(this);
+
+			getSizes = function () {
+				containerWidth = settings.container.outerWidth();
+				containerHeight = settings.container.outerHeight();
+				elWidth = $el.outerWidth();
+				elHeight = $el.outerHeight();
+			};
+
+			move = {
+				right: function () {
+					$el.animate({left: (containerWidth - elWidth)}, {duration: ((containerWidth/settings.speed) * 1000), queue: false, easing: "linear", complete: function () {
+						settings.bumpEdge();
+						move.left();
+					}});
+				},
+				left: function () {
+					$el.animate({left: 0}, {duration: ((containerWidth/settings.speed) * 1000), queue: false, easing: "linear", complete: function () {
+						settings.bumpEdge();
+						move.right();
+					}});
+				},
+				down: function () {
+					$el.animate({top: (containerHeight - elHeight)}, {duration: ((containerHeight/settings.speed) * 1000), queue: false, easing: "linear", complete: function () {
+						settings.bumpEdge();
+						move.up();
+					}});
+				},
+				up: function () {
+					$el.animate({top: 0}, {duration: ((containerHeight/settings.speed) * 1000), queue: false, easing: "linear", complete: function () {
+						settings.bumpEdge();
+						move.down();
+					}});
+				}
+			};
+
+			getSizes();
+
+			if (settings.horizontal) {
+				move.right();
+			}
+			if (settings.vertical) {
+				move.down();
+			}
+
+      // Make that shit responsive!
+      $(window).resize( function() {
+        getSizes();
+      });
+		});
+	};
+})(jQuery, window);
+
+$(document).ready( function() {
+
+	$('.marquee').marqueeify({
+		speed: 300,
+		bumpEdge: function () {
+			var newColor = "hsl(" + Math.floor(Math.random()*360) + ", 100%, 50%)";
+			$('.marquee .logo').css('fill', newColor);
+		}
+	});
+});
+</script>
